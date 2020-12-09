@@ -11,7 +11,7 @@ namespace ToDoList.Tests
 
     public void Dispose()
     {
-      Item.ClearAll(); // comment this line out to run foreach loops with dotnet test! delete this comment and foreach loops(x2) when done testing
+      // Item.ClearAll(); // comment this line out to run foreach loops with dotnet test! delete this comment and foreach loops(x2) when done testing
     }
     [TestMethod]
     public void ItemConstructor_CreatesInstanceOfItem_Item()
@@ -40,7 +40,7 @@ namespace ToDoList.Tests
       Item newItem = new Item(description);
 
       // Act
-      string updatedDescription = "Do the dishes";
+      string updatedDescription = "Do the dishes.";
       newItem.Description = updatedDescription;
       string result = newItem.Description;
 

@@ -11,7 +11,6 @@ namespace ToDoList.Models
     {
       Description = description;
       _instances.Add(this);
-      Item.GetAll(); // does this go here? 
     }
 
     public static List<Item> GetAll()
@@ -26,3 +25,4 @@ namespace ToDoList.Models
 
   }
 }
+    // Item.GetAll(); this belongs in UI to populate the full list
