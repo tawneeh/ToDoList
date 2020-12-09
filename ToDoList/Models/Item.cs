@@ -11,12 +11,17 @@ namespace ToDoList.Models
     {
       Description = description;
       _instances.Add(this);
-      Item.GetAll();
+      Item.GetAll(); // does this go here? 
     }
 
     public static List<Item> GetAll()
     {
       return _instances;
+    }
+
+    public static void ClearAll()
+    {
+      _instances.Clear();
     }
 
   }
