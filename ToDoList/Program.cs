@@ -2,33 +2,30 @@ using System;
 using System.Collections.Generic;
 using ToDoList.Models;
 
-namespace ToDoList
+namespace ToDoList // files with the same namespace will be able to communicate with each other
 {
   class Program
   {
-      static void Main()
+    static void Main()
+    {
+      Console.WriteLine("Main Menu");
+      Console.WriteLine("If you would like to add an item to your to do list [press 'A'] or if you would like to view your list [press 'Enter']");
+      string response = Console.ReadLine();
+      if (response == "A" || response == "a")
       {
-        List<Item> newList = new List<Item> { };
-        Console.WriteLine("Main Menu");
-        Console.WriteLine("Would you like to add an item to your to do list? ['Y' for yes, 'Enter' for no]");
-        string response = Console.ReadLine();
-        if (response == "Y" || response == "y")
-        {
-          Console.WriteLine("Enter your task");
-          Item newItem = new Item(Console.ReadLine());
-          
-        }
-        else
-        {
-          Console.WriteLine("Would you like to view your list? ['Y' for yes, 'Enter' for no]");
-          string listAnswer = Console.ReadLine();
-          if (listAnswer == "Y" || listAnswer == "y") 
-          {
-              List<Item> result = Item.GetAll();
-              Console.WriteLine(result);
-          }
-        }
+        Console.WriteLine("Enter your task");
+        Item newItem = new Item(Console.ReadLine());
+        Main();
       }
-
+      else
+      {
+        List<Item> result = Item.GetAll(); // can create new empty List here - but not needed at all
+        foreach (Item thisItem in result)
+        {
+          Console.WriteLine("To-Do: " + thisItem.Description);
+        }
+        Main(); 
+      }
+    }
   }
 }
