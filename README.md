@@ -16,7 +16,7 @@ Software Requirements
 * A code editor; I prefer VSCode
 
 Open by Downloading or Cloning
-* Navigate to <GITHUB REPO URL>
+* Navigate to <https://github.com/tawneeh/ToDoList.git>
 * Download this repository to your computer by clicking the green Code button and 'Download Zip'
 * Or clone the repository
 
