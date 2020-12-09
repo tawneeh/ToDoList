@@ -102,7 +102,7 @@ namespace ToDoList.Tests
       bool result = newList.Remove(newItem2);
 
       // Assert
-      Assert.AreEqual(false, result);
+      Assert.AreEqual(true, result);
     }
 
   }
