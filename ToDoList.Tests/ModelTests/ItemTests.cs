@@ -11,7 +11,7 @@ namespace ToDoList.Tests
 
     public void Dispose()
     {
-      // Item.ClearAll(); // comment this line out to run foreach loops with dotnet test! delete this comment and foreach loops(x2) when done testing
+      Item.ClearAll(); // comment this line out to run foreach loops with dotnet test! delete this comment and foreach loops(x2) when done testing
     }
     [TestMethod]
     public void ItemConstructor_CreatesInstanceOfItem_Item()
@@ -86,6 +86,23 @@ namespace ToDoList.Tests
 
       // Assert
       CollectionAssert.AreEqual(newList, result);
+    }
+
+    [TestMethod]
+    public void GetNamedItem_RemoveNamedItem_True()
+    {
+      // Arrange
+      string descriptionA = "Fly a kite";
+      string descriptionB = "Buy bread";
+      Item newItem1 = new Item(descriptionA);
+      Item newItem2 = new Item(descriptionB);
+      List<Item> newList = new List<Item> { newItem1, newItem2 };
+
+      // Act
+      bool result = newList.Remove(newItem2);
+
+      // Assert
+      Assert.AreEqual(false, result);
     }
 
   }

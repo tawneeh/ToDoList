@@ -23,6 +23,10 @@ namespace ToDoList.Models
       _instances.Clear();
     }
 
+    public static void Remove(Item task)
+    {
+      _instances.Remove(task);
+    }
+
   }
 }
-    // Item.GetAll(); this belongs in UI to populate the full list
