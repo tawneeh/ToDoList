@@ -3,7 +3,7 @@
 #### _MSTest Practice for Epicodus_ 
 #### _DATE 12.8.2020_
 
-#### By _**Tawnee Harris**_
+#### By _**Tawnee Harris, Bess Campbell and Tyler Sinks**_
 
 ## Description
 
@@ -26,7 +26,7 @@ This application has no known bugs.
 
 ## Support and contact details
 
-Please feel free to reach out to me anytime at <tawneeh@icloud.com>
+Please feel free to reach out to Tawnee anytime at <tawneeh@icloud.com>
 
 ## Technologies Used
 
@@ -36,4 +36,4 @@ Please feel free to reach out to me anytime at <tawneeh@icloud.com>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Copyright (c) 2020 **_Tawnee Harris_**
+Copyright (c) 2020 **_Tawnee Harris, Bess Campbell and Tyler Sinks_**
