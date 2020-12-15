@@ -7,7 +7,7 @@ namespace ToDoList.Models
     public string Description { get; set; } 
     private static List<Item> _instances = new List<Item> {}; // static variable. maintains a list of all Item objects
 
-    public Item(string description) // constructor - pretty sure
+    public Item(string description) // constructor
     {
       Description = description;
       _instances.Add(this);
@@ -23,10 +23,10 @@ namespace ToDoList.Models
       _instances.Clear();
     }
 
-    public static void Remove(Item task)
-    {
-      _instances.Remove(task);
-    }
+    // public static void Remove(Item task)
+    // {
+    //   _instances.Remove(task);
+    // }
 
   }
 }
