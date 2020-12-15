@@ -88,22 +88,22 @@ namespace ToDoList.Tests
       CollectionAssert.AreEqual(newList, result);
     }
 
-    [TestMethod]
-    public void GetNamedItem_RemoveNamedItem_True()
-    {
-      // Arrange
-      string descriptionA = "Fly a kite";
-      string descriptionB = "Buy bread";
-      Item newItem1 = new Item(descriptionA);
-      Item newItem2 = new Item(descriptionB);
-      List<Item> newList = new List<Item> { newItem1, newItem2 };
+    // [TestMethod]
+    // public void GetNamedItem_RemoveNamedItem_True()
+    // {
+    //   // Arrange
+    //   string descriptionA = "Fly a kite";
+    //   string descriptionB = "Buy bread";
+    //   Item newItem1 = new Item(descriptionA);
+    //   Item newItem2 = new Item(descriptionB);
+    //   List<Item> newList = new List<Item> { newItem1, newItem2 };
 
-      // Act
-      bool result = newList.Remove(newItem2);
+    //   // Act
+    //   bool result = newList.Remove(newItem2);
 
-      // Assert
-      Assert.AreEqual(true, result);
-    }
+    //   // Assert
+    //   Assert.AreEqual(true, result);
+    // }
 
   }
 }
