@@ -1,6 +1,6 @@
 # _To Do List_ 
 
-#### _MSTest Practice for Epicodus_ 
+#### _C# Practice for Epicodus_ 
 #### _DATE 12.8.2020_
 
 #### By _**Tawnee Harris, Bess Campbell and Tyler Sinks**_
