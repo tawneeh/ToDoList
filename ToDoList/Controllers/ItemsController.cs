@@ -38,7 +38,7 @@ namespace ToDoList.Controllers
     public ActionResult Show(int id)
     {
     Item foundItem = Item.Find(id);
-    return View();
+    return View(foundItem);
     }
 
   }
