@@ -33,5 +33,13 @@ namespace ToDoList.Controllers
       Item.ClearAll();
       return View();
     }
+
+    [HttpGet("/items/{id}")] // the {id} placeholder uses dynamic routing. lesson 32
+    public ActionResult Show(int id)
+    {
+    Item foundItem = Item.Find(id);
+    return View();
+    }
+
   }
 }
