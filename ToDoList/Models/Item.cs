@@ -25,5 +25,10 @@ namespace ToDoList.Models
       _instances.Clear();
     }
 
+    public static Item Find(int searchId)
+    {
+      return _instances[searchId-1]; // -1 because Id starts at 1 but _instances index starts at 0
+    }
+
   }
 }
