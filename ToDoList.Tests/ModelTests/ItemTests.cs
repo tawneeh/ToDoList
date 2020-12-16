@@ -11,7 +11,7 @@ namespace ToDoList.Tests
 
     public void Dispose()
     {
-      Item.ClearAll(); // comment this line out to run foreach loops with dotnet test! delete this comment and foreach loops(x2) when done testing
+      Item.ClearAll();
     }
     [TestMethod]
     public void ItemConstructor_CreatesInstanceOfItem_Item()
@@ -57,11 +57,6 @@ namespace ToDoList.Tests
       // Act
       List<Item> result = Item.GetAll();
 
-      // foreach (Item thisItem in result)
-      // {
-      //   Console.WriteLine("Output from empty list GetAll test: " + thisItem.Description);
-      // }
-
       // Assert
       CollectionAssert.AreEqual(newList, result);
     }
@@ -79,31 +74,23 @@ namespace ToDoList.Tests
       // Act
       List<Item> result = Item.GetAll();
 
-      // foreach (Item thisItem in result)
-      // {
-      //   Console.WriteLine("Output from second GetAll test " + thisItem.Description);
-      // }
-
       // Assert
       CollectionAssert.AreEqual(newList, result);
     }
 
-    // [TestMethod]
-    // public void GetNamedItem_RemoveNamedItem_True()
-    // {
-    //   // Arrange
-    //   string descriptionA = "Fly a kite";
-    //   string descriptionB = "Buy bread";
-    //   Item newItem1 = new Item(descriptionA);
-    //   Item newItem2 = new Item(descriptionB);
-    //   List<Item> newList = new List<Item> { newItem1, newItem2 };
+    [TestMethod]
+    public void GetId_ItemsInstantiateWithAnIdAndGetterReturns_Int()
+    {
+      // Arrange
+      string description = "Walk the doggo.";
+      Item newItem = new Item(description);
 
-    //   // Act
-    //   bool result = newList.Remove(newItem2);
+      // Act
+      int result = 0;
 
-    //   // Assert
-    //   Assert.AreEqual(true, result);
-    // }
+      // Assert
+      Assert.AreEqual(1, result);
+    }
 
   }
 }
