@@ -8,7 +8,7 @@
 <ul>
   @foreach (Item item in Model) //  item can be named basically anything. loop through each item of type Item in Model
   {
-    <li>@item.Description</li>
+    <li><a href="/items/@item.Id">@item.Description</a></li> // -- /items/@item.Id uses Razor to dynamically change to a specific Item Id. ex: /items/565 
   }
 
 </ul>
