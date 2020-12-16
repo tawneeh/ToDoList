@@ -15,7 +15,7 @@ namespace ToDoList.Controllers
     }
 
     [HttpGet("/items/new")] // routes specifically to making a new Item
-    public ActionResult CreateForm()
+    public ActionResult New()
     {
       return View();
     }
