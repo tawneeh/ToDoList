@@ -28,7 +28,7 @@ namespace ToDoList.Controllers
       return RedirectToAction("Index");
     }
 
-    // This one creates New Items within a given Category, not new Categories: 
+    // This one creates New Items within a given Category, not new Categories:
 
     [HttpPost("/categories/{categoryId}/items")]
     public ActionResult Create(int categoryId, string itemDescription)
@@ -40,7 +40,7 @@ namespace ToDoList.Controllers
       List<Item> categoryItems = foundCategory.Items;
       model.Add("items", categoryItems);
       model.Add("category", foundCategory);
-      return View("Show", model);
+      return View("Show", model); // this View directs to "Show" cshtml
     }
 
     [HttpGet("/categories/{id}")]
