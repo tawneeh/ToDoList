@@ -1,0 +1,22 @@
+@using ToDoList.Models;
+
+<h1>Categories</h1>
+
+@if (@Model.Count == 0)
+{
+  <h3>No categories have been added yet!</h3>
+} 
+
+@foreach (Category category in Model)
+{
+  <h3><a href='/categories/@category.Id'>@category.Name</a></h3>
+}
+
+<p><a href='/'>Back home</a></p>
+
+<!-- If no Categorys exist in the model data, we display a message. line 7
+
+If Categorys do exist, we loop through them and display their names. 
+
+The <h3> displaying their name is also a link to the path - code on line 12 inside href. This will navigate to a detail page for specific Categorys. We'll create this soon.
+-->
