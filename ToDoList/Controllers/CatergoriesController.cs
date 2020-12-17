@@ -16,13 +16,13 @@ namespace ToDoList.Controllers
     }
 
     [HttpGet("/categories/new")]
-    public ActionResult New()
+    public ActionResult New() // the new form that gets filled out. lesson 37
     {
       return View();
     }
 
     [HttpPost("/categories")]
-    public ActionResult Create(string categoryName)
+    public ActionResult Create(string categoryName)  // actual (action) submission/creation of the form. lesson 37
     {
       Category newCategory = new Category(categoryName);
       return RedirectToAction("Index");

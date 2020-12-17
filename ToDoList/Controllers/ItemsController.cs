@@ -7,13 +7,6 @@ namespace ToDoList.Controllers
   public class ItemsController : Controller
   {
 
-    [HttpGet("/items")]
-    public ActionResult Index()
-    {
-      List<Item> allItems = Item.GetAll();
-      return View(allItems);
-    }
-
     [HttpGet("/items/new")] // routes specifically to making a new Item
     public ActionResult New()
     {
@@ -34,7 +27,7 @@ namespace ToDoList.Controllers
       return View();
     }
 
-    [HttpGet("/items/{id}")] // the {id} placeholder uses dynamic routing. lesson 32
+    [HttpGet("/categories/{categoryId}/items/{id}")] // the {id} placeholder uses dynamic routing. lesson 32. item needs parent categories
     public ActionResult Show(int id)
     {
     Item foundItem = Item.Find(id);

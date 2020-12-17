@@ -3,7 +3,7 @@
 <h3>Here are all the items in this category:</h3>
 
 <ol>
-@foreach (Item item in @Model["items"])
+@foreach (Item item in @Model["items"]) // replace Item with 'var' if broken. lesson 37
 {
   <li><a href='/categories/@Model["category"].Id/items/@item.Id'>@item.Description</a></li>
 }
