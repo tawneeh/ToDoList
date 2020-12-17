@@ -7,10 +7,11 @@ namespace ToDoList.Controllers
   public class ItemsController : Controller
   {
 
-    [HttpGet("/items/new")] // routes specifically to making a new Item
-    public ActionResult New()
+    [HttpGet("/categories/{categoryId}/items/new")] // routes specifically to making a new Item
+    public ActionResult New(int categoryId)
     {
-      return View();
+      Category category = Category.Find(categoryId);
+      return View(category);
     }
 
     [HttpPost("/items")]
