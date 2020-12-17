@@ -17,5 +17,25 @@ namespace ToDoList.Models
       Items = new List<Item>{}; // object within object
     }
 
+    public static void ClearAll()
+    {
+      _instances.Clear();
+    }
+
+    public static List<Category> GetAll()
+    {
+      return _instances;
+    }
+
+    public static Category Find(int searchId)
+    {
+      return _instances[searchId-1];
+    }
+
+    public void AddItem(Item item)
+    {
+      Items.Add(item);
+    }
+
   }
 }
