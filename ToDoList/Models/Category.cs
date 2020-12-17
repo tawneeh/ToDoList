@@ -14,7 +14,7 @@ namespace ToDoList.Models
       Name = categoryName;
       _instances.Add(this);
       Id = _instances.Count;
-      Items = new List<Item>{};
+      Items = new List<Item>{}; // object within object
     }
 
   }
