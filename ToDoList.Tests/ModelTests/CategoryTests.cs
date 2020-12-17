@@ -13,7 +13,7 @@ namespace ToDoList.Tests
     public void CategoryConstructor_CreatesInstanceOfCategory_Category() // constructor test 
     {
       Category newCategory = new Category("test category");
-      Assert.AreEqual(typeof(Item), newCategory.GetType());
+      Assert.AreEqual(typeof(Category), newCategory.GetType());
     }
 
   }
