@@ -6,7 +6,7 @@ namespace ToDoList.Models
   public class Item
   {
     public string Description { get; set; } 
-    public int Id { get; }
+    public int Id { get; set; }
 
     public Item(string description) // constructor
     {
@@ -19,7 +19,7 @@ namespace ToDoList.Models
       Id = id;
     }
 
-    public override bool Equals(System.Object otherItem) // this is a special method that overrides a built-in method (Equals() is the built-in method). fixes a multiple entry of the same to do list Item
+    public override bool Equals(System.Object otherItem)
     {
       if (!(otherItem is Item))
       {
@@ -28,8 +28,9 @@ namespace ToDoList.Models
       else
       {
         Item newItem = (Item) otherItem;
+        bool idEquality = (this.Id == newItem.Id);
         bool descriptionEquality = (this.Description == newItem.Description);
-        return descriptionEquality; // return true?? our application will consider both Items to be exactly the same
+        return (idEquality && descriptionEquality);
       }
     }
 
@@ -75,6 +76,27 @@ namespace ToDoList.Models
       // Temporarily returning placeholder item to get beyond compiler errors until we refactor to work with a database.
       Item placeholderItem = new Item("placeholder item");
       return placeholderItem;
+    }
+
+    public void Save()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+
+      cmd.CommandText = @"INSERT INTO items (description) VALUES (@ItemDescription);";
+      MySqlParameter description = new MySqlParameter();
+      description.ParameterName = "@ItemDescription";
+      description.Value = this.Description;
+      cmd.Parameters.Add(description);    
+      cmd.ExecuteNonQuery();
+      Id = (int) cmd.LastInsertedId;
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
 
   }
