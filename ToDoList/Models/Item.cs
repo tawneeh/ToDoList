@@ -19,6 +19,20 @@ namespace ToDoList.Models
       Id = id;
     }
 
+    public override bool Equals(System.Object otherItem) // this is a special method that overrides a built-in method (Equals() is the built-in method). fixes a multiple entry of the same to do list Item
+    {
+      if (!(otherItem is Item))
+      {
+        return false;
+      }
+      else
+      {
+        Item newItem = (Item) otherItem;
+        bool descriptionEquality = (this.Description == newItem.Description);
+        return descriptionEquality; // return true?? our application will consider both Items to be exactly the same
+      }
+    }
+
     public static List<Item> GetAll()
     {
       List<Item> allItems = new List<Item> { };
