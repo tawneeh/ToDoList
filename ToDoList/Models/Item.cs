@@ -6,3 +6,5 @@ namespace ToDoList.Models
     public string Description { get; set; } 
   }
 }
+
+// We don't need Find() or Save() because Entity will take care of it for us! 

@@ -1,36 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using System.Collections.Generic;
+using System.Linq; // LINQ is short for Language-Integrated Query
 
 namespace ToDoList.Controllers
 {
   public class ItemsController : Controller
   {
+    private readonly ToDoListContext _db;
 
-    [HttpGet("/categories/{categoryId}/items/new")] // routes specifically to making a new Item
-    public ActionResult New(int categoryId)
+    public ItemsController(ToDoListContext db)
     {
-      Category category = Category.Find(categoryId);
-      return View(category);
+      _db = db;
     }
 
-    [HttpPost("/items/delete")]
-    public ActionResult DeleteAll()
+    public ActionResult Index()
     {
-      Item.ClearAll();
-      return View();
-    }
-
-    [HttpGet("/categories/{categoryId}/items/{itemId}")]
-    public ActionResult Show(int categoryId, int itemId)
-    {
-      Item item = Item.Find(itemId);
-      Category category = Category.Find(categoryId);
-      Dictionary<string, object> model = new Dictionary<string, object>();
-      model.Add("item", item);
-      model.Add("category", category);
+      List<Item> model = _db.Items.ToList(); // this replaces GetAll()
       return View(model);
     }
-
   }
 }
+
+// db is an instance of our DbContext class. It's holding a reference to our database.
+
+// Once there, it looks for an object named Items. This is the DbSet we declared in ToDoListContext.cs.
+
+// LINQ turns this DbSet into a list using the ToList() method, which comes from the System.Linq namespace.
+
+// This expression is what creates the model we'll use for the Index view.
