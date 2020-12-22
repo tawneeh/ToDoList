@@ -38,5 +38,11 @@ namespace ToDoList.Controllers
       return RedirectToAction("Index");
     }
 
+    public ActionResult Details(int id)
+    {
+        Item thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+        return View(thisItem);
+    }
+
   }
 }
