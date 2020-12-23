@@ -37,7 +37,7 @@ namespace ToDoList.Controllers
         public ActionResult Details(int id)
         {
         Category thisCategory = _db.Categories.FirstOrDefault(categories => categories.CategoryId == id);
-        return View(thisCategory);   
+        return View(thisCategory);
         }
 
         public ActionResult Edit(int id)
