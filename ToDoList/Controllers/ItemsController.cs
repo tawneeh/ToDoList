@@ -59,5 +59,20 @@ namespace ToDoList.Controllers
         return RedirectToAction("Index");
     }
 
+    public ActionResult Delete(int id) // get the item to delete
+    {
+      var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+      return View(thisItem);
+    }
+
+    [HttpPost, ActionName("Delete")] // ActionName("Delete:") refers to the above Delete method that this Post is using. This action actually deletes the item with .Remove()
+    public ActionResult DeleteConfirmed(int id)
+    {
+      var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+      _db.Items.Remove(thisItem);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
   }
 }
