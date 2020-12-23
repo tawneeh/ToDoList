@@ -17,7 +17,7 @@ namespace ToDoList.Controllers
 
     public ActionResult Index()
     {
-      List<Item> model = _db.Items.ToList(); // this replaces GetAll()
+      List<Item> model = _db.Items.Include(items => items.Category).ToList(); // this replaces GetAll()
       return View(model);
 
 // db is an instance of our DbContext class. It's holding a reference to our database
