@@ -3,6 +3,7 @@ using ToDoList.Models;
 using System.Collections.Generic;
 using System.Linq; // LINQ is short for Language-Integrated Query
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering; // gives access to SelectList
 
 namespace ToDoList.Controllers
 {
@@ -28,6 +29,7 @@ namespace ToDoList.Controllers
 
     public ActionResult Create()
     {
+      ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name"); // this enables an Item to belong to a category that already exists. 
       return View();
     }
 
@@ -48,6 +50,7 @@ namespace ToDoList.Controllers
     public ActionResult Edit(int id)
     {
         var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+        ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name"); // same idea as above. SelectList provides a dropdown menu with the database Categories listed
         return View(thisItem);
     }
 
