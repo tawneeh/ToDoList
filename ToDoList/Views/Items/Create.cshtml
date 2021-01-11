@@ -11,10 +11,9 @@
     @Html.LabelFor(model => model.Description)
     @Html.TextBoxFor(model => model.Description)
 
-    @Html.LabelFor(model => model.Category)
+    @Html.Label("Select category")
     @Html.DropDownList("CategoryId") // DropDownList takes the category information passed down from Viewbag and dispays it for the user
 
-    <input type="submit" value="Add new item" class="btn btn-info" />
+    <input type="submit" value="Add new item" class="btn btn-default" />
 }
-
 <p>@Html.ActionLink("Show all items", "Index")</p>

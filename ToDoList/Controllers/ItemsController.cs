@@ -18,13 +18,7 @@ namespace ToDoList.Controllers
 
     public ActionResult Index()
     {
-      List<Item> model = _db.Items.Include(items => items.Category).ToList(); // this replaces GetAll()
-      return View(model);
-
-// db is an instance of our DbContext class. It's holding a reference to our database
-// Once there, it looks for an object named Items. This is the DbSet we declared in ToDoListContext.cs
-// LINQ turns this DbSet into a list using the ToList() method, which comes from the System.Linq namespace
-// This expression is what creates the model we'll use for the Index view
+      return View(_db.Items.ToList());
     }
 
     public ActionResult Create()
@@ -34,32 +28,61 @@ namespace ToDoList.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Item item)
+    public ActionResult Create(Item item, int CategoryId)
     {
       _db.Items.Add(item);
+      if (CategoryId != 0) // this is confusing to me - lesson 6
+      {
+        _db.CategoryItem.Add(new CategoryItem() { CategoryId = CategoryId, ItemId = item.ItemId });
+      }
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
     public ActionResult Details(int id)
     {
-        Item thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
-        return View(thisItem);
+      var thisItem = _db.Items // List of Item objects from the database
+          .Include(item => item.Categories) // .Include loads the Categories property of each Item
+          .ThenInclude(join => join.Category) // .ThenInclude loads the Category of each CategoryItem. Kind of confusing - lesson 5
+          .FirstOrDefault(item => item.ItemId == id);
+      return View(thisItem);
     }
 
     public ActionResult Edit(int id)
     {
-        var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
-        ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name"); // same idea as above. SelectList provides a dropdown menu with the database Categories listed
-        return View(thisItem);
+      var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+      ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
+      return View(thisItem);
     }
 
     [HttpPost]
-    public ActionResult Edit(Item item)
+    public ActionResult Edit(Item item, int CategoryId)
     {
-        _db.Entry(item).State = EntityState.Modified; // this tells Entity that we want to modify an Item
-        _db.SaveChanges(); // this changes the modifications
-        return RedirectToAction("Index");
+      if (CategoryId != 0)
+      {
+        _db.CategoryItem.Add(new CategoryItem() { CategoryId = CategoryId, ItemId = item.ItemId });
+      }
+      _db.Entry(item).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult AddCategory(int id)
+    {
+      var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+      ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
+      return View(thisItem);
+    }
+
+    [HttpPost]
+    public ActionResult AddCategory(Item item, int CategoryId)
+    {
+      if (CategoryId != 0)
+      {
+      _db.CategoryItem.Add(new CategoryItem() { CategoryId = CategoryId, ItemId = item.ItemId });
+      }
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
 
     public ActionResult Delete(int id) // get the item to delete
@@ -75,6 +98,15 @@ namespace ToDoList.Controllers
       _db.Items.Remove(thisItem);
       _db.SaveChanges();
       return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public ActionResult DeleteCategory(int joinId)
+    {
+        var joinEntry = _db.CategoryItem.FirstOrDefault(entry => entry.CategoryItemId == joinId);
+        _db.CategoryItem.Remove(joinEntry);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
     }
 
   }

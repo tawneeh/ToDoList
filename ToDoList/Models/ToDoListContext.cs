@@ -4,14 +4,11 @@ namespace ToDoList.Models
 {
   public class ToDoListContext : DbContext
   {
-    public virtual DbSet<Category> Categories { get; set; } // declared virtual for Lazy-Loading
+    public virtual DbSet<Category> Categories { get; set; }
     public DbSet<Item> Items { get; set; }
-
+    public DbSet<CategoryItem> CategoryItem { get; set; }
     public ToDoListContext(DbContextOptions options) : base(options) { }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) // OnConfiguring enables Lazy-Loading
-    {
-      optionsBuilder.UseLazyLoadingProxies(); 
-    }
   }
 }
+
+// Each DbSet will become a table in our database. CategoryItem represents the join table
