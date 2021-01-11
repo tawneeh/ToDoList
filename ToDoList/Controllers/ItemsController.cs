@@ -3,35 +3,51 @@ using ToDoList.Models;
 using System.Collections.Generic;
 using System.Linq; // LINQ is short for Language-Integrated Query
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering; // gives access to SelectList
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+//new using directives
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace ToDoList.Controllers
 {
+  [Authorize] //new line
   public class ItemsController : Controller
   {
     private readonly ToDoListContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public ItemsController(ToDoListContext db)
+    //updated constructor
+    public ItemsController(UserManager<ApplicationUser> userManager, ToDoListContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
 
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      return View(_db.Items.ToList());
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var userItems = _db.Items.Where(entry => entry.User.Id == currentUser.Id);
+      return View(userItems);
     }
 
     public ActionResult Create()
     {
-      ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name"); // this enables an Item to belong to a category that already exists. 
+      ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Item item, int CategoryId)
+    public async Task<ActionResult> Create(Item item, int CategoryId)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      item.User = currentUser;
       _db.Items.Add(item);
-      if (CategoryId != 0) // this is confusing to me - lesson 6
+      if (CategoryId != 0)
       {
         _db.CategoryItem.Add(new CategoryItem() { CategoryId = CategoryId, ItemId = item.ItemId });
       }
@@ -41,9 +57,9 @@ namespace ToDoList.Controllers
 
     public ActionResult Details(int id)
     {
-      var thisItem = _db.Items // List of Item objects from the database
-          .Include(item => item.Categories) // .Include loads the Categories property of each Item
-          .ThenInclude(join => join.Category) // .ThenInclude loads the Category of each CategoryItem. Kind of confusing - lesson 5
+      var thisItem = _db.Items
+          .Include(item => item.Categories)
+          .ThenInclude(join => join.Category)
           .FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }
@@ -79,19 +95,19 @@ namespace ToDoList.Controllers
     {
       if (CategoryId != 0)
       {
-      _db.CategoryItem.Add(new CategoryItem() { CategoryId = CategoryId, ItemId = item.ItemId });
+        _db.CategoryItem.Add(new CategoryItem() { CategoryId = CategoryId, ItemId = item.ItemId });
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
-    public ActionResult Delete(int id) // get the item to delete
+    public ActionResult Delete(int id)
     {
       var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
       return View(thisItem);
     }
 
-    [HttpPost, ActionName("Delete")] // ActionName("Delete:") refers to the above Delete method that this Post is using. This action actually deletes the item with .Remove()
+    [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
       var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
@@ -103,11 +119,10 @@ namespace ToDoList.Controllers
     [HttpPost]
     public ActionResult DeleteCategory(int joinId)
     {
-        var joinEntry = _db.CategoryItem.FirstOrDefault(entry => entry.CategoryItemId == joinId);
-        _db.CategoryItem.Remove(joinEntry);
-        _db.SaveChanges();
-        return RedirectToAction("Index");
+      var joinEntry = _db.CategoryItem.FirstOrDefault(entry => entry.CategoryItemId == joinId);
+      _db.CategoryItem.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
-
   }
 }
