@@ -7,7 +7,7 @@
 
 <h1>Items for @User.Identity.Name</h1>
 
-@if (Model.Any()) // ff the Model includes any Items, this will return true, and we'll loop through our list. Otherwise, the statement will return false and we'll display the "no items added" message
+@if (Model.Any()) // if the Model includes any Items, this will return true, and we'll loop through our list. Otherwise, the statement will return false and we'll display the "no items added" message
 {
   <ul>
     @foreach (Item item in Model)

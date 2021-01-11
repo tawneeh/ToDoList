@@ -36,7 +36,7 @@ namespace ToDoList
       services.Configure<IdentityOptions>(options =>
       {
         options.Password.RequireDigit = false;
-        options.Password.RequiredLength = 0;
+        options.Password.RequiredLength = 0; // 0 will actually return null and value cannot be null
         options.Password.RequireLowercase = false;
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequireUppercase = false;
