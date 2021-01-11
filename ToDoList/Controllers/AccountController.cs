@@ -12,7 +12,7 @@ namespace ToDoList.Controllers
     private readonly UserManager<ApplicationUser> _userManager; // this is a service that we are injecting into this constructor so that we have access when we need it
     private readonly SignInManager<ApplicationUser> _signInManager; // same as above. lesson 5 - service notes below
 
-    public AccountController (UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ToDoListContext db)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ToDoListContext db)
     {
       _userManager = userManager;
       _signInManager = signInManager;
@@ -30,7 +30,7 @@ namespace ToDoList.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult> Register (RegisterViewModel model) // async Task that contains an ActionResult
+    public async Task<ActionResult> Register(RegisterViewModel model) // async Task that contains an ActionResult
     {
       var user = new ApplicationUser { UserName = model.Email };
       IdentityResult result = await _userManager.CreateAsync(user, model.Password); // CreateAsync() is a built in class method of UserManager via Identity
@@ -43,6 +43,33 @@ namespace ToDoList.Controllers
         return View();
       }
     }
+
+    public ActionResult Login()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Login(LoginViewModel model)
+    {
+      Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
+      if (result.Succeeded) // if the user was able to log in (if the boolean property of Identity.SignInResult, result.Succeeded, == true), redirect to Index
+      {
+        return RedirectToAction("Index");
+      }
+      else
+      {
+        return View(); // otherwise, return the Login View. this conditional prevents the app from freezing if authentication fails
+      }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> LogOff()
+    {
+      await _signInManager.SignOutAsync();
+      return RedirectToAction("Index");
+    }
+
   }
 }
 
