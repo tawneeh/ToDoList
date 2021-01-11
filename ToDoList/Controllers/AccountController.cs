@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using ToDoList.Models;
 using System.Threading.Tasks; // allows use of asynchronous Tasks so we can use async and await to register new users
-using ToDoList.ViewModels;
+using ToDoList.ViewModels; // when we deal with data that only shows up in the view, we can use a ViewModel instead of a Model
 
 namespace ToDoList.Controllers
 {
